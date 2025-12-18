@@ -1,0 +1,167 @@
+/* ##################### importation d'une police ##################### */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+
+/* ##################### variable de couleur ##################### */
+:root {
+    --bg-fonce: #222;
+    --texte-grise: #bfc4c8;
+    --hover: #EEE;
+    --ombre: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+
+html, body {
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: var(--bg-fonce);
+    color: #f5f5f5;
+}
+
+
+/* ##################### Partie header ##################### */
+header {
+    padding: 18px 10px;
+    text-align: center;
+}
+header h1{
+    margin: 50px 0 0;
+    color: #edf7ee;
+    font-weight: 600;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+    font-size: 1.3rem;
+}
+
+/* ##################### Partie NAV ##################### */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 6px auto 10px;
+    background: rgba(25,25,25,0.95);
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 15px;
+    width: 92%;
+    border-radius: 20px;
+    box-shadow: var(--ombre);
+}
+
+nav a {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 8px 10px;
+    margin: 4px 0;
+    border-radius: 999px;
+    transition: background-color 0.3s;
+    display: block;
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.02);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+nav a:hover {
+    background-color: var(--hover);
+    color: #092012;
+    transform: scale(1.02);
+    box-shadow: 0 8px 18px rgba(92,163,123,0.12);
+}
+
+/* ##################### Partie MAIN ##################### */
+main {
+    max-width: 100%;
+    margin: 80px 10px 90px;
+    padding: 14px 16px;
+    background: rgba(22,22,22,0.04);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.02);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+
+main img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+    display: block;
+    margin: 6px 0;
+}
+
+h3 {
+    color: #edf7ee;
+    font-weight: 600;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+    font-size: 1.1rem;
+}
+
+
+/* ##################### Partie LISTE ##################### */
+dl dt {
+    color: #dff3e6;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+dl dd {
+    color: var(--texte-grise);
+    line-height: 1.4;
+    margin: 4px 0 8px;
+    font-size: 0.9rem;
+}
+
+.titre {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+/* ##################### Partie TABLEAU ##################### */
+table {
+    border-collapse: collapse;
+    max-width: 100%;
+    margin: 8px 0;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow-x: auto;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.45);
+    font-size: 0.85rem;
+}
+
+thead th {
+    background-color: #7a2020;
+    color: #fff;
+    font-weight: 700;
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    text-align: left;
+}
+
+tbody td {
+    border-bottom: 1px solid #ececec;
+    padding: 8px 10px;
+    color: #333;
+    text-align: left;
+    font-size: 0.85rem;
+}
+
+tbody tr:hover {
+    background: var(--hover);
+}
+
+
+/* ##################### Partie FOOTER ##################### */
+footer p {
+    background-color: rgba(25,25,25,0.95);
+    color: #cfcfcf;
+    text-align: center;
+    padding: 8px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    border-top: 1px solid rgba(255,255,255,0.02);
+    font-size: 0.85rem;
+}
