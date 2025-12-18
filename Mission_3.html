@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport SAE - Mission 3</title>
+    <link rel="icon" href="assets/images/logo_iut.svg" type="image/svg">
+    <link rel="stylesheet" href="assets/css/style.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="assets/css/styleTablette.css" media="screen and (min-width: 768px) and (max-width: 1024px)">
+    <link rel="stylesheet" href="assets/css/styleMobile.css" media="screen and (max-width: 767px)">
+</head>
+<body>
+    <nav>
+        <a href="Page_acceuil.html">Accueil</a>
+        <a href="Mission_1.html">Mission 1</a>
+        <a href="Mission_2.html">Mission 2</a>
+        <a href="Mission_3.html">Mission 3</a>
+        <a href="Conclusion.html">Conclusion</a>
+    </nav>
+    <header>
+        <h1> Rapport de SAE 1.04 BD et WEB</h1>
+    </header>
+    <main>
+        <ul>
+            <li>
+                <dl>
+                    <dt>Contexte :</dt>
+                    <dd>Lors de cette troisième et dernière mission, nous exploiterons la base de données KDou pour
+                        élaborer des indicateurs calculés utiles.</dd>
+                </dl>
+            </li>
+            <li>Présentation des indicateurs pour chaque personne
+                <ul>
+                    <li>Indicateur de Lowen S.
+                    <ul>
+                        <li>
+                            <dl>
+                                <dt>Enoncé :</dt>
+                                <dd>On veut connaître la répartition des produits achetés selon la provenance de leurs
+                                fournisseurs, en distinguant ceux situés dans l'Union Européenne et ceux hors UE. On
+                                veut avoir le nombre de pays et le pourcentage.</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>Construction :</dt>
+                                <dd>On fait la jointure interne entre les tables Produit(pour avoir le nombre de
+                                    produits), Fournisseur (pour savoir quelle est le pays d’origine du produit) et
+                                    Pays (pour savoir si le pays est membre ou non de l’UE). On regroupe ensuite les
+                                    pays en fonction du fait qu’ils appartiennent ou non à l’UE. On affiche enfin le
+                                    nombre de produit (avec Count(Pays.UE)) venant de l’UE ou non et le pourcentage :
+                                    on divise le nombre de produits UE ou non (Count(Produit.RefProd)) par le nombre
+                                    total de produit (la sous-requête) et on multiplie par 100 pour avoir un
+                                    pourcentage.</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>SQL :</dt>
+                                <dd>SELECT Pays.UE,  Count(Pays.UE) AS NbrPays,  (Count(Produit.RefProd) * 100) /
+                                    ( SELECT Count(*) FROM Produit ) AS Pourcentage<br>
+                                    FROM  Pays INNER JOIN ( Fournisseur INNER JOIN Produit ON Fournisseur.NoFour =
+                                    Produit.NoFour ) ON Pays.NoPays = Fournisseur.NoPays<br>
+                                    GROUP BY  Pays.UE<br>
+                                    ORDER BY 1;<br>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>Résultats :</dt>
+                                <dd>
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">UE</th>
+                                            <th scope="col">Nombre de pays</th>
+                                            <th scope="col">Pourcentage</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Hors</td>
+                                            <td>62</td>
+                                            <td>56,88%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Membre</td>
+                                            <td>47</td>
+                                            <td>43,12%</td>
+                                        </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    </li>
+                    <li>Indicateur de Lény M.
+                        <ul>
+                            <li>
+                                <dl>
+                                    <dt>Enoncé :</dt>
+                                    <dd>Calculer, pour chaque pays de provenances des fournisseurs, la marge commerciale
+                                        totale générée par les ventes des produits fournis depuis ce pays. La marge
+                                        d’une produit est calculée par unité comme (CoutAchat * CoefMarge) – CoutAchat,
+                                        puis multipliée par la quantité vendue et cumulée par pays.</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Construction :</dt>
+                                    <dd>Formule de marge unitaire : pour chaque produit, la marge par unité = (CoutAchat
+                                        * CoefMarge) - CoutAchat. Le coefficient de marge (CoefMarge) est stocké dans la
+                                        table Categorie, d’où la jonction entre Produit  et Categorie.<br>
+                                        Quantification : multiplier la marge unitaire par la Quantité vendue dans
+                                        DetailCommande pour obtenir la marge générée par ligne de commande.<br>
+                                        Agrégation : sommer ces marges (SUM(...)) par pays (Pays.PaysFR) pour obtenir
+                                        la marge totale par pays fournisseur.<br>
+                                        Jointures :
+                                        Entre Produit et Categorie (pour CoefMarge), puis entre Produit, Fournisseur et
+                                        Pays (pour l’origine), enfin entre Produit et DetailCommande (pour les quantités
+                                        vendues). Tri : ORDER BY 2 DESC ordonne par la 2eme colonne du SELECT
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>SQL :</dt>
+                                    <dd>SELECT Pays.PaysFR AS [Pays Fournisseur], SUM((Produit.CoutAchat *
+                                        Categorie.CoefMarge - Produit.CoutAchat) * [DetailCommande].[Quantité]) AS
+                                        [Marge Totale]<br>
+                                        FROM (((Produit INNER JOIN Categorie ON Produit.CodeCateg =
+                                        Categorie.CodeCateg)<br>
+                                        INNER JOIN Fournisseur ON Produit.NoFour = Fournisseur.NoFour)<br>
+                                        INNER JOIN Pays ON Fournisseur.NoPays = Pays.NoPays)<br>
+                                        INNER JOIN [DetailCommande] ON Produit.RefProd =
+                                        [DetailCommande].[Réf produit]<br>
+                                        GROUP BY Pays.PaysFR<br>
+                                        ORDER BY 2 DESC;<br>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Résultats :</dt>
+                                    <dd>
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Pays Fournisseur</th>
+                                                <th scope="col">Marge Totale</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>France</td>
+                                                <td>482 373,75€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Allemagne</td>
+                                                <td>470 716,71€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Italie</td>
+                                                <td>328 502,05€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Australie</td>
+                                                <td>308 682,18€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Canada</td>
+                                                <td>301 614,13€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Etats-Unis</td>
+                                                <td>183 355,19€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Japon
+                                                </td>
+                                                <td>139 061,57€</td>
+                                            </tr>
+                                            <tr><td>
+                                                Finlande</td>
+                                                <td>91 331,63€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Norvège</td>
+                                                <td>82 318,00€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Royaume-Uni</td>
+                                                <td>79 697,35€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Suède</td>
+                                                <td>73 983,65€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Singapour</td>
+                                                <td>57 708,18€</td>
+                                            </tr>
+                                            <tr><td>
+                                                Espagne
+                                            </td>
+                                            <td>51 853,68€</td></tr>
+                                            <tr>
+                                                <td>Brésil</td>
+                                                <td>31 775,63€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Danemark</td>
+                                                <td>14 719,13€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Pays-Bas</td>
+                                                <td>3 821,25€</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>Indicateur de Tenzin K.
+                        <ul>
+                            <li>
+                                <dl>
+                                    <dt>Enoncé :</dt>
+                                    <dd>Quels sont les dix clients qui ont dépensé le plus et qui ont commandé le plus
+                                        souvent au total, mais dont la dernière commande remonte à plus de six mois ?
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Construction :</dt>
+                                    <dd>Cette requête est conçue pour identifier les 10 clients les plus précieux qui
+                                        sont en risque de désabonnement (Churn), pour faire la requette on commence
+                                        par :
+                                        <ul>
+                                            <li>Limitation des Résultats (SELECT TOP 10) : La requête se limite à
+                                                afficher les 10 clients les plus critiques, facilitant l'action ciblée
+                                                par l'équipe commerciale.</li>
+                                            <li>Jointures (INNER JOIN) : Les quatre tables nécessaires (Clientèle [C],
+                                                Commande [Co], DetailCommande [D], et Produit[P]) sont jointes par leurs
+                                                clés communes (CodeCli, N° commande, Réf produit) pour lier chaque
+                                                transaction au client et aux détails du produit.</li>
+                                            <li>Calcul du Montant (M) : La fonction SUM() calcule le TotalDepensé par
+                                                client en utilisant la formule : Quantité * Coût Achat * (1 - Remise).
+                                                Le CoutAchat est utilisé comme base pour représenter la valeur
+                                                financière de l'achat pour Kdou</li>
+                                            <li>Calcul de la Fréquence (F) : COUNT(Co.[N° commande]) dénombre le nombre
+                                                total de commandes passées par chaque client.</li>
+                                            <li>Calcul de la Récence (R) : DATEDIFF("d", MAX(Co.DateCde), Date())
+                                                calcule le nombre de jours écoulés entre la date du jour (Date()) et la
+                                                date de la dernière commande (MAX(Co.DateCde)), fournissant ainsi la
+                                                récence</li>
+                                            <li>Groupement (GROUP BY) : Les résultats sont regroupés par identifiant
+                                                client (C.CodeCli) et nom (C.Societe) pour agréger les totaux et les
+                                                maximums par individu.</li>
+                                            <li>Filtrage par Récence (HAVING) : La clause HAVING filtre le résultat pour
+                                                ne retenir que les clients dont la dernière commande remonte à plus de
+                                                180 jours (> 180), signalant un risque d'inactivité ou de
+                                                désabonnement.</li>
+                                            <li>Classement (ORDER BY) :
+                                                <ul>
+                                                    <li>Les résultats sont triés par TotalDepensé (colonne 2) en ordre
+                                                        décroissant (DESC) pour identifier les clients ayant la plus
+                                                        grande valeur financière historique.</li>
+                                                    <li>Le classement secondaire se fait sur
+                                                        NbJoursDepuisDerniereCommande (colonne 4) en ordre décroissant
+                                                        (DESC), priorisant les clients à forte valeur qui sont inactifs
+                                                        depuis le plus longtemps.</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>SQL :</dt>
+                                    <dd>SELECT TOP 10
+                                        C.Societe AS NomClient,
+                                        SUM(D.Quantité * P.CoutAchat * (1 - D.[Remise (%)])) AS TotalDepensé,
+                                        COUNT(Co.[N° commande]) AS NbCommandes,
+                                        DATEDIFF("d", MAX(Co.DateCde), Date()) AS NbJoursDepuisDerniereCommande,<br>
+                                        FROM
+                                        Clientèle AS C
+                                        INNER JOIN
+                                        Commande AS Co ON C.CodeCli = Co.CodeCli
+                                        INNER JOIN
+                                        DetailCommande AS D ON Co.NoCommande= D.NoCommande
+                                        INNER JOIN
+                                        Produit AS P ON D.RefProd = P.RefProd<br>
+                                        GROUP BY
+                                        C.CodeCli, C.Societe, C.Contact<br>
+                                        HAVING
+                                        DATEDIFF("d", MAX(Co.DateCde), Date()) > 180 -- Récence > 180<br>
+                                        ORDER BY 2 DESC, 4 DESC;
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Résultats :</dt>
+                                    <dd><img src="assets/images/r3_tenzin.png" alt ="Résultats Requête Tenzin" width="504" height="168"></dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <p>© 2025 SAE 1.04. Tous droits réservés.</p>
+    </footer>
+    </body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport SAE - Mission 2 </title>
+    <link rel="icon" href="assets/images/logo_iut.svg" type="image/svg">
+    <link rel="stylesheet" href="assets/css/style.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="assets/css/styleTablette.css" media="screen and (min-width: 768px) and (max-width: 1024px)">
+    <link rel="stylesheet" href="assets/css/styleMobile.css" media="screen and (max-width: 767px)">
+</head>
+<body>
+    <nav>
+        <a href="Page_acceuil.html">Accueil</a>
+        <a href="Mission_1.html">Mission 1</a>
+        <a href="Mission_2.html">Mission 2</a>
+        <a href="Mission_3.html">Mission 3</a>
+        <a href="Conclusion.html">Conclusion</a>
+    </nav>
+    <header>
+        <h1> Rapport de SAE 1.04 BD et WEB</h1>
+    </header>
+    <main>
+        <ul>
+            <li>
+                <dl>
+                    <dt>Contexte :</dt>
+                    <dd>L’objectif de cette mission est de commencer à exploiter la base de données de
+                        l’entreprise KDou pour pouvoir par la suite avoir des analyses et indicateurs pertinents. On
+                        souhaite faire des requêtes avec le logiciel Low Code Access. </dd>
+                </dl>
+            </li>
+            <li>Présentation d'indicateurs :
+                <ol>
+                    <li>
+                        <ul>
+                            <li>
+                                <dl>
+                                    <dt>Enoncé :</dt>
+                                    <dd> On voudrait des informations sur Jean-Guy Lauzon. C’est un fournisseur.</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Interprétation :</dt>
+                                    <dd>On doit donner toutes les informations qu’on peut avoir sur Jean-Guy
+                                        Lauzon</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Résultat :</dt>
+                                    <dd><img src="assets/images/tableau_reponse_a.png" alt ="Tableau de réponse indicateur a" width="1278" height="91"></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Code SQL :</dt>
+                                    <dd>SELECT *<br>
+                                        FROM Fournisseur AS F <br>
+                                        WHERE F.Contact = "Jean-Guy Lauzon"<br>
+                                        ORDER BY 1; </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <li>
+                                <dl>
+                                    <dt>Enoncé :</dt>
+                                    <dd> On veut vérifier les coordonnées des clients parisiens : en donner une liste
+                                        triée par société.</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Interprétation :</dt>
+                                    <dd>Cette requête permet d’obtenir la liste des clients habitant à Paris, afin de contrôler
+                                        leurs coordonnées (adresse, téléphone, email…). Le tri par société facilite la lecture.</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Résultat :</dt>
+                                    <dd>
+                                        <img src ="assets/images/tableau_reponse_b.png" alt="Tableau de reponse
+                                        indicateur b" width="1616" height="180">
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Code SQL :</dt>
+                                    <dd>SELECT Clientele.CodeCli, Clientele.Societe, Clientele.Contact, Clientele.Adresse,<br>
+                                        Clientele.Ville, Clientele.CodePostal, Clientele.Pays, Clientele.Tel, Clientele.MailCli AS
+                                        <br>
+                                        Mail_Client <br>
+                                        FROM Clientele <br>
+                                        WHERE Clientele.Ville="Paris" <br>
+                                        ORDER BY 2; </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <li>
+                                <dl>
+                                    <dt>Enoncé :</dt>
+                                    <dd> Quels fournisseurs proposent de la viande et du poisson ? </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Interprétation :</dt>
+                                    <dd>Cette requête permet de trouver les fournisseurs qui travaillent dans
+                                        ces deux catégories. On fait une première requête où on sélectionne les
+                                        fournisseurs qui proposent de la viande et on fait une deuxième requête où on
+                                        sélectionne ceux qui proposent du poisson. On fait ensuite une jointure interne entre
+                                        les deux requêtes. </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Résultat :</dt>
+                                    <dd>
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Société</th>
+                                                <th scope="col">Contact</th>
+                                                <th scope="col">Pays</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Sakura Imports</td>
+                                                <td>Yoshi Nagase</td>
+                                                <td>Japon</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>Code SQL :</dt>
+                                    <dd>SELECT R1.Societe, R1.Contact, R1.Pays<br>
+                                        FROM (<br>
+                                        SELECT F.Societe, F.Contact, F.Pays<br>
+                                        FROM Fournisseur AS F INNER JOIN ( Categorie AS C<br>
+                                        INNER JOIN Produit AS P<br>
+                                        ON C.CodeCateg = P.CodeCateg ) ON F.NoFour = P.NoFour<br>
+                                        WHERE C.NomCateg = "Viandes"<br>
+                                        ORDER BY 1<br>
+                                        ) AS R1<br>
+                                        INNER JOIN (<br>
+                                        SELECT F.Societe, F.Contact, F.Pays<br>
+                                        FROM Fournisseur AS F INNER JOIN ( Categorie AS C<br>
+                                        INNER JOIN Produit AS P<br>
+                                        ON C.CodeCateg = P.CodeCateg )<br>
+                                        ON F.NoFour = P.NoFour<br>
+                                        WHERE C.NomCateg LIKE "Poisson*"<br>
+                                        ORDER BY 1<br>
+                                        ) AS R2 ON R1.Societe = R2.Societe<br>
+                                        ORDER BY 1;</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <p>© 2025 SAE 1.04. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

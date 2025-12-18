@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport SAE - Mission 1</title>
+    <link rel="icon" href="assets/images/logo_iut.svg" type="image/svg">
+    <link rel="stylesheet" href="assets/css/style.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="assets/css/styleTablette.css" media="screen and (min-width: 768px) and (max-width: 1024px)">
+    <link rel="stylesheet" href="assets/css/styleMobile.css" media="screen and (max-width: 767px)">
+</head>
+<body>
+    <nav>
+        <a href="Page_acceuil.html">Accueil</a>
+        <a href="Mission_1.html">Mission 1</a>
+        <a href="Mission_2.html">Mission 2</a>
+        <a href="Mission_3.html">Mission 3</a>
+        <a href="Conclusion.html">Conclusion</a>
+    </nav>
+    <header>
+        <h1> Rapport de SAE 1.04 BD et WEB</h1>
+    </header>
+    <main>
+        <ul>
+            <li>
+                <dl>
+                    <dt>Contexte</dt>
+                    <dd>L’objectif initial est tout d'abord de <strong>comprendre les données</strong> : il faut
+                        comprendre le contenu de chaque table et comprendre les liens entre les tables. Les données
+                        fournies par KDou sont sous la forme d'un <strong>classeur Excel</strong>, contenant une
+                        feuille par table de la base de données de KDou. Le second objectif est d'<strong>analyser
+                        </strong> ces données et de repérer d'éventuelles incohérences ou anomalies dans ces dernières.
+                    </dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>Bilan structuré sur l'étude des données</dt>
+                    <dd>L'analyse des données met en évidence plusieurs problèmes concernant les opérations de KDou.
+                        La réclamation de Maria Larson au sujet des commandes de novembre 2021 trouve son origine
+                        dans une erreur de saisie : le code client "FOLKO" a été enregistré comme "FOLK0" pour les
+                        commandes 10332 et 10333 des 27 et 28 novembre 2021. Cette diﬀérence a pour eﬀet de rendre
+                        ces commandes absentes de son historique client.
+                        Les diﬃcultés de communication mentionnées par Marc Randon semblent liées à une
+                        incohérence dans les données d'adresse. L'enregistrement de sa société "Le Gourmet" indique
+                        Paris comme ville mais utilise le code postal 76001(qui est le Havre) Cette incohérence a pu
+                        créer des confusions dans les échanges et les livraisons.
+                        On peut constater également d'autres problèmes dans la gestion de l'information. On observe un
+                        numéro de fournisseur 31 utilisé pour deux entreprises diﬀérentes. Il y a des variations dans
+                        les formats d'adresses internationales, et l'absence de numéro de téléphone pour le fournisseur
+                        "Boomerang Goods". Il y a des incohérences comme une date de livraison antérieure à la date de
+                        commande pour la référence 10331. Et aussi des problèmes d’orthographes comme « Suéde ».</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>Perspective d'amélioration</dt>
+                    <dd>Pour améliorer l'organisation et la qualité des données, plusieurs actions pourraient être mises en
+                        œuvre. La création de listes de valeurs normalisées pour les pays, villes et codes postaux
+                        permettrait d'éliminer les incohérences actuelles de saisie. L'implémentation de contrôles
+                        automatiques lors de l'enregistrement des commandes vérifierait la cohérence des dates et
+                        l'exactitude des références clients. Un système de validation en temps réel pourrait prévenir les
+                        erreurs de typographie courantes, comme la confusion entre "O" et "0", et garantir le format
+                        uniforme des coordonnées. La mise en place de procédures de nettoyage régulières des données
+                        identifierait et corrigerait les doublons, et aussi les champs obligatoires dans les formulaires de
+                        saisie réduiraient les informations manquantes.
+                        Il faut utiliser un système de gestion de bases de données plus restrictif que Excel, pour éviter les
+                        incohérences. KDou pourrait utiliser Access par exemple.</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>Conclusion</dt>
+                    <dd>L’analyse des données de KDou révèle des problèmes liés à des erreurs de saisie, incohérences
+                        d’adresses et absence de contrôles automatisés.  Des solutions incluent la normalisation des
+                        valeurs, des contrôles automatiques, un système de validation en temps réel et l’utilisation
+                        d’un système de gestion de base de données plus restrictif.</dd>
+                </dl>
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <p>© 2025 SAE 1.04. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

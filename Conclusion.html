@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport SAE et Web - Conclusion </title>
+    <link rel="icon" href="assets/images/logo_iut.svg" type="image/svg">
+    <link rel="stylesheet" href="assets/css/style.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" href="assets/css/styleTablette.css" media="screen and (min-width: 768px) and (max-width: 1024px)">
+    <link rel="stylesheet" href="assets/css/styleMobile.css" media="screen and (max-width: 767px)">
+</head>
+<body>
+    <nav>
+        <a href="Page_acceuil.html">Accueil</a>
+        <a href="Mission_1.html">Mission 1</a>
+        <a href="Mission_2.html">Mission 2</a>
+        <a href="Mission_3.html">Mission 3</a>
+        <a href="Conclusion.html">Conclusion</a>
+    </nav>
+    <header>
+        <h1> Rapport de SAE 1.04 BD et WEB</h1>
+    </header>
+    <main>
+        <ul>
+            <li>
+                <dl>
+                    <dt class="titre">
+                        Conclusion pour l’entreprise KDou sur l’analyse de ses données
+                    </dt>
+                    <dd> En conclusion, l’analyse des données de l’entreprise KDou met en évidence à la fois la richesse
+                        des informations collectées et les limites de leur gestion actuelle. Les traitements réalisés à
+                        l’aide d’Excel, Access et SQL ont permis de repérer plusieurs incohérences : erreurs de saisie
+                        (codes clients erronés, fautes d’orthographe), doublons, absences de valeurs obligatoires
+                        (téléphone, adresse), et anomalies logiques (dates incohérentes, correspondances ville/code
+                        postal incorrectes). Ces problèmes traduisent un manque de contrôle automatisé lors de la saisie
+                        et une absence de normalisation dans la base de données.
+
+                        Cependant, cette analyse a aussi montré le potentiel d’amélioration de la gestion de
+                        l’information chez KDou. En mettant en place une base de données structurée et sécurisée sous
+                        Access, avec des règles de validation strictes et des champs normalisés,
+                        l’entreprise pourrait fiabiliser ses données, faciliter les analyses commerciales et améliorer
+                        la communication avec ses clients et fournisseurs. Une meilleure qualité de
+                        données permettra à KDou d’optimiser ses processus de commande, de renforcer le suivi logistique
+                        et de soutenir des décisions stratégiques plus précises et plus réactives. </dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt class="titre">
+                        Conclusion sur les outils utilisés pour cette analyse (Excel, Access QBE / SQL)
+                    </dt>
+                    <dd> Pour conclure cette analyse, <strong>Excel</strong> a été l’outil principal (mission 1) : il a servi à
+                        l’exploration des données, au tri et aux sous-totaux, aux filtres avancés, aux recherches
+                        croisées (ex. RECHERCHEX pour rattacher pays et nom de catégorie), à la détection d’erreurs
+                        de saisie (orthographes, codes postaux, doublons) mais cette application ne contraint aucune action,
+                        pas de contrainte d'intégritée. <strong>Microsoft Access (QBE)</strong> a complété Excel en structurant les
+                        données en tables relationnelles (Fournisseur,
+                        Produit, Catégorie, Clientèle, Commande, DétailCommande), en définissant clés primaires/
+                        candidates et clés étrangères, et en apportant une interface visuelle pour construire
+                        rapidement des requêtes par exemple pour vérifier l’intégrité des enregistrements.
+                        Enfin, le SQL a été utilisé pour les traitements les plus robustes
+                        (missions 2 et 3) : requêtes de sélection, jointures multiples, agrégations
+                        (CA par année/catégorie), sous-requêtes et détections d’anomalies (fournisseurs sans
+                        produits, clients sans commandes, top N commandes). Ensemble, ces outils se sont révélés
+                        complémentaires Excel pour l’analyse exploratoire et le diagnostic rapide, Access/QBE pour
+                        la modélisation et la saisie contrôlée, et SQL pour les rapports complexes.</dd>
+                </dl>
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <p>© 2025 SAE 1.04. Tous droits réservés.</p>
+    </footer>
+    </body>
+</html>
